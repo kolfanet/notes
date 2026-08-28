@@ -38,6 +38,9 @@ echo '# My Eleventy Project' > index.md
 # Dependencies
 node_modules
 
+# Eleventy output
+dist
+
 # VS Code
 .history
 .vscode
