@@ -31,6 +31,7 @@ This repository contains my personal notes.
 - [Nodejs Installation](notes/Installation-Guides/nodejs-installation.md)
 - [Pds Installation](notes/Installation-Guides/pds-installation.md)
 - [Rust Installation](notes/Installation-Guides/rust-installation.md)
+- [Silverbullet Installation](notes/Installation-Guides/silverbullet-installation.md)
 - [Syncthing Installation](notes/Installation-Guides/syncthing-installation.md)
 
 ## Linux
