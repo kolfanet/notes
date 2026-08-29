@@ -42,37 +42,10 @@ Install the required packages:
 sudo apt install -y \
     wget \
     curl \
-    ca-certificates \
     nginx \
     certbot \
     python3-certbot-nginx
 ```
-
-Check that nginx is running:
-
-```bash
-sudo systemctl status nginx
-```
-
-You can exit the status view with:
-
-```text
-q
-```
-
-If Ubuntu's firewall is enabled, check it:
-
-```bash
-sudo ufw status
-```
-
-If it is active, make sure SSH and nginx are allowed:
-
-```bash
-sudo ufw allow OpenSSH
-sudo ufw allow 'Nginx Full'
-```
-
 ---
 
 # 2. Create the GoToSocial Directory
@@ -83,15 +56,8 @@ Create the GoToSocial installation and storage directories:
 sudo mkdir -p /gotosocial/storage/certs
 ```
 
-The resulting structure will initially look like:
-
-```text
-/gotosocial
-└── storage
-    └── certs
-```
-
-The `certs` directory is not actually required for this nginx/Certbot setup because nginx will manage the certificates, but keeping the standard GoToSocial directory structure does no harm.
+Note: 
+- The `certs` directory is not actually required for this nginx/Certbot setup because nginx will manage the certificates, but keeping the standard GoToSocial directory structure does no harm.
 
 ---
 
@@ -109,45 +75,14 @@ Check the CPU architecture:
 uname -m
 ```
 
-Usually:
+Usually `x86_64` means `linux_amd64` and `aarch64` means `linux_arm64`.
 
-```text
-x86_64
-```
-
-means:
-
-```text
-linux_amd64
-```
-
-and:
-
-```text
-aarch64
-```
-
-means:
-
-```text
-linux_arm64
-```
-
-Check the GoToSocial releases page and identify the latest **stable** version.
-
-Do not use an RC or snapshot unless you specifically want a development build.
-
-Set the version and architecture.
-
-For example:
+Check the GoToSocial releases page and identify the latest **stable** version and set the version and architecture. For example:
 
 ```bash
 GTS_VERSION=0.22.1
 GTS_TARGET=linux_amd64
 ```
-
-Replace `0.22.1` with the current stable version if a newer release exists.
-
 Download it:
 
 ```bash
