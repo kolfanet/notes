@@ -77,7 +77,7 @@ uname -m
 
 Usually `x86_64` means `linux_amd64` and `aarch64` means `linux_arm64`.
 
-Check the GoToSocial releases page and identify the latest **stable** version and set the version and architecture. For example:
+Check the GoToSocial [releases](https://codeberg.org/superseriousbusiness/gotosocial/releases) page and identify the latest **stable** version and set the version and architecture. For example:
 
 ```bash
 GTS_VERSION=0.22.1
@@ -140,7 +140,7 @@ sudo nano /gotosocial/config.yaml
 
 It is recommended to keep only values that differ from GoToSocial defaults.
 
-For this installation, use:
+For this installation guide, use:
 
 ```yaml
 host: "gts.example.net"
@@ -161,14 +161,6 @@ trusted-proxies:
   - "::1"
 
 accounts-allow-custom-css: true
-```
-
-Save with:
-
-```text
-Ctrl+O
-Enter
-Ctrl+X
 ```
 
 ## Understanding `host` and `account-domain`
