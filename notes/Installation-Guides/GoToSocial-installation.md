@@ -150,7 +150,7 @@ bind-address: "127.0.0.1"
 port: 8080
 
 db-type: "sqlite"
-db-address: "/gotosocial/storage/sqlite.db"
+db-address: "sqlite.db"
 
 storage-local-base-path: "/gotosocial/storage"
 
@@ -243,16 +243,12 @@ User=gotosocial
 Group=gotosocial
 ```
 
-and that the working directory and executable point to `/gotosocial`.
-
-For example, the relevant values should correspond to:
+and that the working directory and executable point to `/gotosocial`:
 
 ```text
 WorkingDirectory=/gotosocial
-ExecStart=/gotosocial/gotosocial --config-path /gotosocial/config.yaml server start
+ExecStart=/gotosocial/gotosocial --config-path config.yaml server start
 ```
-
-## Do NOT enable `CAP_NET_BIND_SERVICE`
 
 Leave this line commented if present:
 
@@ -349,13 +345,6 @@ Test nginx:
 sudo nginx -t
 ```
 
-You should see:
-
-```text
-syntax is ok
-test is successful
-```
-
 Reload nginx:
 
 ```bash
@@ -368,15 +357,6 @@ At this point nginx is listening for `gts.example.net`, although GoToSocial itse
 
 # 7. Configure DNS
 
-Go to:
-
-```text
-Cloudflare
-→ example.net
-→ DNS
-→ Records
-```
-
 Create an `A` record:
 
 ```text
@@ -385,26 +365,6 @@ Name:          gts
 IPv4 address:  YOUR_SERVER_PUBLIC_IPV4
 Proxy status:  DNS only
 TTL:           Auto
-```
-
-The important part is:
-
-```text
-gts.example.net → your Ubuntu server
-```
-
-I recommend using:
-
-```text
-DNS only
-```
-
-rather than the orange Cloudflare proxy for the GoToSocial hostname.
-
-Your root domain remains unchanged:
-
-```text
-example.net → Cloudflare Pages
 ```
 
 If your server also has properly configured public IPv6, you can additionally create an `AAAA` record:
@@ -418,45 +378,21 @@ Proxy status:  DNS only
 
 Do not create the `AAAA` record unless IPv6 actually works on the server.
 
-## Verify DNS
-
-From your computer or server:
-
-```bash
-dig gts.example.net
-```
-
-or:
-
-```bash
-nslookup gts.example.net
-```
-
-It should return your server's public IP address.
-
-Do not proceed with Certbot until DNS resolves correctly.
-
 ---
 
 # 8. Obtain the TLS Certificate
-
-Run:
 
 ```bash
 sudo certbot --nginx -d gts.example.net
 ```
 
-Certbot will ask for an email address and agreement to the Let's Encrypt terms.
-
-If offered the choice to redirect HTTP to HTTPS, select HTTPS redirection.
-
-After Certbot finishes, test nginx:
+Test nginx:
 
 ```bash
 sudo nginx -t
 ```
 
-Then reload it:
+Reload it:
 
 ```bash
 sudo systemctl reload nginx
@@ -490,125 +426,33 @@ sudo certbot renew --dry-run
 
 # 9. Configure the Split-Domain Redirects on Cloudflare
 
-GoToSocial runs at:
+In Cloudflare open `example.net` > `Rules` > `Create Rule (Redirect Rule)`
 
-```text
-gts.example.net
-```
-
-but users are:
-
-```text
-@username@example.net
-```
-
-Fediverse servers therefore initially contact:
-
-```text
-example.net
-```
-
-to discover where the account actually lives.
-
-The following three endpoints need to redirect from `example.net` to `gts.example.net`:
-
-```text
-/.well-known/webfinger
-/.well-known/host-meta
-/.well-known/nodeinfo
-```
-
-Do **not** redirect:
-
-```text
-/api/*
-```
-
-from `example.net` to `gts.example.net`.
-
-Doing that can interfere with Fediverse client split-domain detection.
-
-## Recommended Cloudflare configuration
-
-Because WebFinger requires its query string to survive the redirect, a Cloudflare Redirect Rule is a particularly explicit way to configure this.
-
-In Cloudflare open:
-
-```text
-example.net
-→ Rules
-→ Redirect Rules
-```
-
-Create a **Single Redirect**.
-
-Give it a name such as:
+Rule name:
 
 ```text
 GoToSocial well-known endpoints
 ```
 
-Use a custom filter expression equivalent to:
+In section for matching condition select `Custom filter expression` and then `Edit expression`:
 
 ```text
 (http.host eq "example.net" and http.request.uri.path in {"/.well-known/webfinger" "/.well-known/host-meta" "/.well-known/nodeinfo"})
 ```
 
-For the redirect target choose a **Dynamic** redirect.
+In URL redirect section:
 
-Use:
+Type: `Dynamic`
+URL: `concat("https://gts.example.net", http.request.uri.path)`
+Status code: `301`
 
-```text
-concat("https://gts.example.net", http.request.uri.path)
-```
+Also make sure you check `Preserve query string`.
 
-Set:
-
-```text
-Status code:            301
-Preserve query string:  Enabled
-```
-
-Save and deploy the rule.
-
-This means that:
-
-```text
-https://example.net/.well-known/webfinger?resource=acct:something@example.net
-```
-
-becomes:
-
-```text
-https://gts.example.net/.well-known/webfinger?resource=acct:something@example.net
-```
-
-while your normal Cloudflare Pages website continues working normally:
-
-```text
-https://example.net/
-https://example.net/about
-https://example.net/blog
-...
-```
-
-Only the three `/.well-known/...` endpoints are redirected.
-
-### Why preserve the query string?
-
-A WebFinger request contains the account being requested in the `resource` query parameter:
-
-```text
-?resource=acct:something@example.net
-```
-
-If that query parameter were dropped, GoToSocial would not know which account the remote Fediverse server is requesting.
+Select order: `First`
 
 ---
 
 # 10. Start GoToSocial
-
-Everything necessary for the public-facing setup should now be ready.
 
 Start the service:
 
@@ -622,126 +466,21 @@ Check its status:
 sudo systemctl status gotosocial.service
 ```
 
-It should show:
-
-```text
-active (running)
-```
-
-Exit with:
-
-```text
-q
-```
-
-If it fails, inspect the logs:
-
-```bash
-sudo journalctl \
-    -u gotosocial.service \
-    -n 100 \
-    --no-pager
-```
-
-For live logs:
-
-```bash
-sudo journalctl \
-    -u gotosocial.service \
-    -f
-```
-
 GoToSocial will create its SQLite database during initial startup:
 
 ```text
-/gotosocial/storage/sqlite.db
+/gotosocial/sqlite.db
 ```
 
 Verify that it exists:
 
 ```bash
-sudo ls -lh /gotosocial/storage/sqlite.db
+sudo ls -lh /gotosocial/sqlite.db
 ```
 
 ---
 
-# 11. Verify the Instance
-
-First test GoToSocial directly through its local nginx backend:
-
-```bash
-curl -I http://127.0.0.1:8080
-```
-
-Then test the public HTTPS endpoint:
-
-```bash
-curl -I https://gts.example.net
-```
-
-You should receive a valid HTTP response.
-
-Open:
-
-```text
-https://gts.example.net
-```
-
-in a browser.
-
-You should see the GoToSocial instance page.
-
-Check that nginx is listening on the public HTTP/HTTPS ports:
-
-```bash
-sudo ss -tulpn | grep -E ':80|:443'
-```
-
-And check that GoToSocial itself only listens locally on port `8080`:
-
-```bash
-sudo ss -tulpn | grep 8080
-```
-
-You want something corresponding to:
-
-```text
-127.0.0.1:8080
-```
-
-and **not**:
-
-```text
-0.0.0.0:8080
-```
-
-This prevents users from bypassing nginx and accessing GoToSocial directly.
-
----
-
-# 12. Create the GoToSocial Account
-
-Choose:
-
-```text
-USERNAME
-EMAIL
-PASSWORD
-```
-
-For example, if:
-
-```text
-USERNAME=something
-```
-
-your public Fediverse handle will become:
-
-```text
-@something@example.net
-```
-
-Run the account creation command as the dedicated GoToSocial system user:
+# 11. Create the GoToSocial Account
 
 ```bash
 sudo -u gotosocial \
@@ -753,37 +492,9 @@ sudo -u gotosocial \
     --password 'PASSWORD'
 ```
 
-For example:
-
-```bash
-sudo -u gotosocial \
-    /gotosocial/gotosocial \
-    --config-path /gotosocial/config.yaml \
-    admin account create \
-    --username something \
-    --email me@example.net \
-    --password 'YOUR_SECURE_PASSWORD'
-```
-
-Using `sudo -u gotosocial` rather than running the command as root avoids accidentally creating database or storage files owned by root.
-
-Your resulting Fediverse address is:
-
-```text
-@something@example.net
-```
-
-while your profile lives on:
-
-```text
-https://gts.example.net/@something
-```
-
 ---
 
-# 13. Promote the Account to Administrator
-
-Run:
+# 12. Promote the Account to Administrator
 
 ```bash
 sudo -u gotosocial \
@@ -792,18 +503,6 @@ sudo -u gotosocial \
     admin account promote \
     --username USERNAME
 ```
-
-For example:
-
-```bash
-sudo -u gotosocial \
-    /gotosocial/gotosocial \
-    --config-path /gotosocial/config.yaml \
-    admin account promote \
-    --username something
-```
-
-GoToSocial caches some account information, so admin promotion requires a service restart.
 
 ---
 
