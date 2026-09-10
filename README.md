@@ -38,6 +38,7 @@ This repository contains my personal notes.
 ## Linux
 
 - [Advanced Packaging Tool](notes/Linux/advanced-packaging-tool.md)
+- [Dnf Package Management](notes/Linux/dnf-package-management.md)
 - [Nginx Configuration](notes/Linux/nginx-configuration.md)
 - [Nginx Installation](notes/Linux/nginx-installation.md)
 - [Open Ssh](notes/Linux/open-ssh.md)
