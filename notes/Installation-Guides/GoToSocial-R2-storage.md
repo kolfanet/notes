@@ -353,6 +353,55 @@ sudo journalctl \
 ```
 
 # Test Existing Media
+
+First, test one migrated object. To test the returned object automatically:
+
+```bash
+R2_OBJECT_PATH="$(
+    sudo mc find r2/gotosocial-media \
+    | head -n 1
+)"
+```
+
+Remove the alias and bucket prefix:
+
+```bash
+R2_OBJECT_KEY="${R2_OBJECT_PATH#r2/gotosocial-media/}"
+```
+
+Display the resulting URL:
+
+```bash
+echo "https://media.example.net/${R2_OBJECT_KEY}"
+```
+
+Test it:
+
+```bash
+curl -I \
+    "https://media.kolfa.net/${R2_OBJECT_KEY}"
+```
+
+Expected result is:
+
+```bash
+HTTP/2 200
+```
+
+Now verify GoToSocial redirects correctly:
+
+```bash
+curl -sIL \
+    "https://gts.kolfa.net/fileserver/${R2_OBJECT_KEY}" \
+    | grep -Ei '^(HTTP/|location:|content-type:|content-length:|cf-cache-status:|age:)'
+```
+
+You should see a redirect to:
+
+```txt
+https://media.example.net/...
+```
+
 # Test a New Upload
 # Configure Cloudflare Caching
 # Rollback Procedure
