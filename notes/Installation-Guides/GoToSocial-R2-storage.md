@@ -141,16 +141,16 @@ Keep the credentials inside single quotes.
 Test access:
 
 ```bash
-sudo mc ls r2
-```
-
-You should see: `gotosocial-media/`
-
-Test the bucket:
-
-```bash
 sudo mc ls r2/gotosocial-media
 ```
+
+If the bucket is empty, successful output may simply be blank. Check the exit status:
+
+```bash
+echo $?
+```
+
+`0` means it worked.
 
 Because this command was run with sudo, MinIO stores the credentials under root’s configuration. Do not make that configuration publicly readable.
 
