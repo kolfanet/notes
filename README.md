@@ -25,6 +25,7 @@ This repository contains my personal notes.
 ## Installation Guides
 
 - [GoToSocial Installation](notes/Installation-Guides/GoToSocial-installation.md)
+- [GoToSocial R2 Storage](notes/Installation-Guides/GoToSocial-R2-storage.md)
 - [Jellyfin Installation](notes/Installation-Guides/jellyfin-installation.md)
 - [Kavita Installation](notes/Installation-Guides/kavita-installation.md)
 - [Mdbook Installation](notes/Installation-Guides/mdbook-installation.md)
