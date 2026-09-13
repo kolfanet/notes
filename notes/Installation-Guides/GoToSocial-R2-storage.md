@@ -1,6 +1,16 @@
 # Enable Cloudflare R2 for an Existing GoToSocial Instance
 
-This guide describes how to enable Cloudflare R2 for an existing GoToSocial instance.
+This guide describes how to enable Cloudflare R2 for an existing GoToSocial instance. It assumes existing bare-metal [GoToSocial installation](/notes/Installation-Guides/GoToSocial-installation.md):
+
+```txt
+GoToSocial:       https://gts.example.net
+R2 media domain:  https://media.example.net
+Installation:     /gotosocial
+Local media:      /gotosocial/storage
+Database:         /gotosocial/sqlite.db
+Service:          gotosocial.service
+```
+
 ---
 
 # Create the Cloudflare R2 Bucket
