@@ -2,6 +2,10 @@
 
 Calibre-web Automated installation on Ubuntu Server.
 
+# Prerequisite
+
+- [Docker installation](/notes/Installation-Guides/Docker-installation.md)
+
 # Create directories for CWA
 
 ```bash
