@@ -24,6 +24,8 @@ This repository contains my personal notes.
 
 ## Installation Guides
 
+- [CWA Installation](notes/Installation-Guides/CWA-installation.md)
+- [Docker Installation](notes/Installation-Guides/Docker-installation.md)
 - [GoToSocial Installation](notes/Installation-Guides/GoToSocial-installation.md)
 - [GoToSocial R2 Storage](notes/Installation-Guides/GoToSocial-R2-storage.md)
 - [Jellyfin Installation](notes/Installation-Guides/jellyfin-installation.md)
