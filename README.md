@@ -18,6 +18,8 @@ This repository contains my personal notes.
 
 - [Build Eleventy On Linux](notes/Eleventy/build-eleventy-on-linux.md)
 - [Eleventy Initial Setup](notes/Eleventy/eleventy-initial-setup.md)
+- [Internalization I18n](notes/Eleventy/internalization-i18n.md)
+- [Language Switcher](notes/Eleventy/language-switcher.md)
 - [Photoswipe In Eleventy](notes/Eleventy/photoswipe-in-eleventy.md)
 - [Push A Repo To Github](notes/Eleventy/push-a-repo-to-github.md)
 - [Standard.Site In 11ty Via Sequoia](notes/Eleventy/standard.site-in-11ty-via-sequoia.md)
