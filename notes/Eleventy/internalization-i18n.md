@@ -159,8 +159,6 @@ export default {
 
 ## Netlify
 
-# Netlify redirection 
-
 `/netlify.toml`
 
 ```html
