@@ -52,9 +52,13 @@ This repository contains my personal notes.
 - [Advanced Packaging Tool](notes/Linux/advanced-packaging-tool.md)
 - [CLI Tips](notes/Linux/CLI-tips.md)
 - [Dnf Package Management](notes/Linux/dnf-package-management.md)
+- [Files And Directories](notes/Linux/files-and-directories.md)
+- [Managing Processes](notes/Linux/Managing-processes.md)
 - [Nginx Configuration](notes/Linux/nginx-configuration.md)
 - [Nginx Installation](notes/Linux/nginx-installation.md)
 - [Open Ssh](notes/Linux/open-ssh.md)
+- [Simple Scripts](notes/Linux/simple-scripts.md)
 - [Snap Package Management](notes/Linux/snap-package-management.md)
 - [Ssl Certificate](notes/Linux/ssl-certificate.md)
+- [User Management](notes/Linux/user-management.md)
 
