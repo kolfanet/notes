@@ -17,14 +17,12 @@ Plugin is bundled with Eleventy and does not require separate installation.
 `/eleventy.config.js`
 
 ```js
-
-
+import { I18nPlugin } from "@11ty/eleventy";
 
 export default function (eleventyConfig) {
-	eleventyConfig.addPlugin(EleventyI18nPlugin, {
-      // any valid BCP 47-compatible language tag is supported
-      defaultLanguage: "cs",
-    });
+	eleventyConfig.addPlugin(I18nPlugin, {
+    defaultLanguage: "en",
+  });
 }
 ```
 
