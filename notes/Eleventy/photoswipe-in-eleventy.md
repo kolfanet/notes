@@ -1,18 +1,18 @@
-## Summary
+# Summary
 
 Using PhotoSwipe in 11ty.
 
-## Sources
+# Sources
 
 - [Official website](https://photoswipe.com/getting-started/)
 
-## PhotoSwipe installation
+# PhotoSwipe installation
 
 ```bash
 npm install photoswipe
 ```
 
-## Copy PhotoSwipe files
+# Copy PhotoSwipe files
 
 `eleventy.config.js`:
 
@@ -26,7 +26,7 @@ export default function (eleventyConfig) {
 }
 ```
 
-## Add PhotoSwipe CSS
+# Add PhotoSwipe CSS
 
 ```html
 <head>
@@ -34,7 +34,7 @@ export default function (eleventyConfig) {
 </head>
 ```
 
-## Create PhotoSwipe script
+# Create PhotoSwipe script
 
 `views/assets/js/photoswipe.js`:
 
@@ -53,7 +53,7 @@ const lightbox = new PhotoSwipeLightbox({
 lightbox.init();
 ```
 
-## Add script to base.njk
+# Add script to base.njk
 
 `views/_layouts/base.njk`:
 
@@ -63,7 +63,7 @@ lightbox.init();
 </body>
 ```
 
-## Usage
+# Usage
 
 ```html
 <div class="pswp-gallery" id="my-gallery">

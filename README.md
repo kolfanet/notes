@@ -17,12 +17,18 @@ This repository contains my personal notes.
 ## Eleventy
 
 - [Build Eleventy On Linux](notes/Eleventy/build-eleventy-on-linux.md)
+- [Chartjs](notes/Eleventy/chartjs.md)
+- [Dotenv Package](notes/Eleventy/dotenv-package.md)
 - [Eleventy Initial Setup](notes/Eleventy/eleventy-initial-setup.md)
+- [Eleventy Navigation](notes/Eleventy/eleventy-navigation.md)
 - [Internalization I18n](notes/Eleventy/internalization-i18n.md)
 - [Language Switcher](notes/Eleventy/language-switcher.md)
+- [Luxon](notes/Eleventy/luxon.md)
 - [Photoswipe In Eleventy](notes/Eleventy/photoswipe-in-eleventy.md)
 - [Push A Repo To Github](notes/Eleventy/push-a-repo-to-github.md)
+- [Rss Plugin](notes/Eleventy/rss-plugin.md)
 - [Standard.Site In 11ty Via Sequoia](notes/Eleventy/standard.site-in-11ty-via-sequoia.md)
+- [Syntax Highlighting](notes/Eleventy/syntax-highlighting.md)
 
 ## Installation Guides
 
@@ -44,6 +50,7 @@ This repository contains my personal notes.
 ## Linux
 
 - [Advanced Packaging Tool](notes/Linux/advanced-packaging-tool.md)
+- [CLI Tips](notes/Linux/CLI-tips.md)
 - [Dnf Package Management](notes/Linux/dnf-package-management.md)
 - [Nginx Configuration](notes/Linux/nginx-configuration.md)
 - [Nginx Installation](notes/Linux/nginx-installation.md)
