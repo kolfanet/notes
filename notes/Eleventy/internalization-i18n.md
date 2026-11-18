@@ -79,25 +79,6 @@ export default function (eleventyConfig) {
     ...
 ```
 
-# Netlify redirection 
-
-`/netlify.toml`
-
-```html
-# Redirect for end-user’s browser preference override
-[[redirects]]
-  from = "/*"
-  to = "/en/:splat"
-  status = 302
-  conditions = {Language = ["en"]}
-
-# Default
-[[redirects]]
-  from = "/*"
-  to = "/cs/:splat"
-  status = 302
-```
-
 # Localized collections (example)
 
 `/eleventy.config.js`
@@ -174,4 +155,76 @@ export default {
 {{ languages.en.nextPostText }}
 ```
 
+# Redirections
+
+## Netlify
+
+# Netlify redirection 
+
+`/netlify.toml`
+
+```html
+# Redirect for end-user’s browser preference override
+[[redirects]]
+  from = "/*"
+  to = "/en/:splat"
+  status = 302
+  conditions = {Language = ["en"]}
+
+# Default
+[[redirects]]
+  from = "/*"
+  to = "/cs/:splat"
+  status = 302
+```
+
+## Cloudflare Pages
+
+`functions/index.js`:
+
+```js
+
+export function onRequest({ request }) {
+  const acceptLanguage =
+    request.headers.get("Accept-Language") || "";
+
+  // Parse language preferences and their quality weights
+  const languages = acceptLanguage
+    .split(",")
+    .map((entry) => {
+      const [tag, quality] = entry.trim().split(";q=");
+
+      return {
+        tag: tag.toLowerCase(),
+        q: quality === undefined ? 1 : Number(quality),
+      };
+    })
+    .filter(({ tag, q }) => tag && q > 0 && q <= 1)
+    .sort((a, b) => b.q - a.q);
+
+  // Default to English
+  let lang = "en";
+
+  for (const { tag } of languages) {
+    const primary = tag.split("-")[0];
+
+    if (primary === "cs" || primary === "en") {
+      lang = primary;
+      break;
+    }
+  }
+
+  const url = new URL(request.url);
+  url.pathname = `/${lang}/`;
+
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: url.toString(),
+      Vary: "Accept-Language",
+      "Cache-Control": "private, no-store",
+    },
+  });
+}
+```
 
