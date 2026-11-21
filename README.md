@@ -38,6 +38,7 @@ This repository contains my personal notes.
 - [GoToSocial R2 Storage](notes/Installation-Guides/GoToSocial-R2-storage.md)
 - [Jellyfin Installation](notes/Installation-Guides/jellyfin-installation.md)
 - [Kavita Installation](notes/Installation-Guides/kavita-installation.md)
+- [Mastodon Db Backup](notes/Installation-Guides/mastodon-db-backup.md)
 - [Mastodon Docker Installation](notes/Installation-Guides/mastodon-docker-installation.md)
 - [Mdbook Installation](notes/Installation-Guides/mdbook-installation.md)
 - [Miniflux Installation](notes/Installation-Guides/miniflux-installation.md)
